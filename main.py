@@ -7,7 +7,8 @@ from passlib.hash import pbkdf2_sha256
 from model import Task, User
 
 app = Flask(__name__)
-app.secret_key = b'\x9d\xb1u\x08%\xe0\xd0p\x9bEL\xf8JC\xa3\xf4J(hAh\xa4\xcdw\x12S*,u\xec\xb8\xb8'
+#app.secret_key = b'\x9d\xb1u\x08%\xe0\xd0p\x9bEL\xf8JC\xa3\xf4J(hAh\xa4\xcdw\x12S*,u\xec\xb8\xb8'
+app.secret_key = os.environ.get('SECRET_KEY').encode()
 
 @app.route('/all')
 def all_tasks():
@@ -39,7 +40,7 @@ def login():
 
     else:
         return render_template('login.jinja2')
-        
+
 @app.route('/incomplete', methods=['GET', 'POST'])
 def incomplete_tasks():
     if 'username' not in session:
